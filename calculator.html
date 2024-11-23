@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: rgb(42, 210, 134);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        .calculator {
+            width: 300px;
+            height: 520px;
+            box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            background: #222522;
+            overflow: hidden;
+        }
+        form input {
+            width: 100%;
+            height: 150px;
+            border: none;
+            border-radius: 12px;
+            font-size: 2rem;
+            padding: 1rem;
+            color: #fff;
+            background: #000;
+            text-align: right;
+            pointer-events: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .button {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        button {
+            flex: 0 0 22%;
+            margin: 5px 0;
+            border: 1px solid #000;
+            width: 60px;
+            height: 52px;
+            font-size: 22px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .btn-yellow {
+            background: rgb(245, 146, 62);
+            color: #fff;
+        }
+        .btn-grey {
+            background: rgb(224, 224, 224);
+            color: #000;
+        }
+        .btn-equal {
+            background: red;
+            color: #fff;
+            flex: 0 0 48%;
+        }
+        .btn-clear {
+            background: green ;
+            color: #fff;
+            flex: 0 0 48% ;
+        }
+        .btn-slice {
+            background: green ;
+            color: #fff ;
+        }
+        .btn-theme {
+            flex: 0 0 100%;
+            background: rgb(79, 79, 147);
+            color: #fff;
+            font-size: 18px;     
+        }
+    </style>
+</head>
+<body>
+    <section class="calculator">
+        <div class="row" style="display:flex;">
+            <div class="col">
+                <h2 style="color: white;margin-left: 10px;">calculator</h2>
+
+            </div>
+            <div class="col" style="margin-left: 80px;">     
+           <button style="width: 100px; height: 30px;" class="btn btn-theme" onclick="toggleTheme()">Theme</button>
+
+            </div>
+        </div>
+
+        <form>
+            <input id="A" type="text" class="screen" readonly>
+        </form>
+        <div class="button">
+            <button class="btn btn-grey" onclick="displaynum(7)">7</button>
+            <button class="btn btn-grey" onclick="displaynum(8)">8</button>
+            <button class="btn btn-grey" onclick="displaynum(9)">9</button>
+            <button class="btn btn-slice" onclick="lastchar()">DEL</button>
+            <button class="btn btn-grey" onclick="displaynum(4)">4</button>
+            <button class="btn btn-grey" onclick="displaynum(5)">5</button>
+            <button class="btn btn-grey" onclick="displaynum(6)">6</button>
+            <button class="btn btn-yellow" onclick="displaynum('+')">+</button>
+            <button class="btn btn-grey" onclick="displaynum(1)">1</button>
+            <button class="btn btn-grey" onclick="displaynum(2)">2</button>
+            <button class="btn btn-grey" onclick="displaynum(3)">3</button>
+            <button class="btn btn-yellow" onclick="displaynum('-')">-</button>
+            <button class="btn btn-grey" onclick="displaynum('.')">.</button>
+            <button class="btn btn-grey" onclick="displaynum(0)">0</button>
+            <button class="btn btn-yellow" onclick="displaynum('/')">/</button>
+            <button class="btn btn-yellow" onclick="displaynum('*')">*</button>
+            <button class="btn btn-clear" onclick="clearText()">C</button>
+            <button class="btn btn-equal" onclick="operation()">=</button>
+        </div>
+    </section>
+    <script>
+        const screen = document.getElementById('A');
+
+        function displaynum(no) {
+            screen.value += no;
+        }
+
+        function clearText() {
+            screen.value = '';
+        }
+
+        function operation() {
+            try {
+                screen.value = eval(screen.value) || '';
+            } catch {
+                screen.value = 'Error';
+            }
+        }
+
+        function lastchar() {
+            screen.value = screen.value.slice(0, -1);
+        }
+
+        function toggleTheme() {
+    const body = document.body;
+    const screen = document.querySelector(".screen");
+    const buttons = document.querySelectorAll("button");
+
+    // Toggle between three themes
+    if (body.dataset.theme === "light") {
+        // Switch to dark theme
+        body.style.background = "#121212";
+        screen.style.background = "#222";
+        screen.style.color = "#0f0";
+        buttons.forEach(button => {
+            button.style.background = "#333";
+            button.style.color = "#fff";
+        });
+        body.dataset.theme = "dark";
+    } else if (body.dataset.theme === "dark") {
+        // Switch to blue-gray theme
+        body.style.background = "#B0C4DE"; // LightSteelBlue
+        screen.style.background = "#778899"; // LightSlateGray
+        screen.style.color = "#000";
+        buttons.forEach(button => {
+            button.style.background = "#A9A9A9"; // DarkGray
+            button.style.color = "#222";
+        });
+        body.dataset.theme = "blue-gray";
+    } else {
+        // Switch to light theme (original green)
+        body.style.background = "rgb(42, 210, 134)";
+        screen.style.background = "#000";
+        screen.style.color = "#fff";
+        buttons.forEach(button => {
+            button.style.background = "";
+            button.style.color = "";
+        });
+        body.dataset.theme = "light";
+    }
+}
+
+    </script>
+</body>
+</html>
